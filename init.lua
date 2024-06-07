@@ -15,6 +15,7 @@ App:start({
 		end
 	end,
 	css = src("style/style.css"),
-}, function()
-	Bar(0)
-end)
+	main = function()
+		Bar(0)
+	end,
+})
