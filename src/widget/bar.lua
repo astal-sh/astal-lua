@@ -1,7 +1,6 @@
 local astal = require("astal")
-local Widget, Variable, App, bind = astal.Widget, astal.Variable, astal.App, astal.bind
-
-local date = Variable(""):poll(1000, "date")
+local Widget, App = astal.Widget, astal.App
+local date = require("src.lib").date
 
 local function LeftBar()
 	return Widget.Box({
@@ -17,20 +16,23 @@ local function CenterBar()
 	return Widget.Box({
 		class_name = "center",
 		Widget.Label({
-			label = bind(date),
+			label = date(),
 		}),
 	})
 end
 
 local function RightBar()
+	local function on_clicked()
+		print("Hello")
+	end
+
 	return Widget.Box({
 		class_name = "right",
 		halign = "END",
+
 		Widget.Button({
-			label = "Click Me!",
-			on_clicked = function()
-				print("Hello")
-			end,
+			on_clicked = on_clicked,
+			"Click Me!",
 		}),
 	})
 end
@@ -47,9 +49,9 @@ return function(monitor)
 
 		Widget.CenterBox({
 			class_name = "bar",
-			start_widget = LeftBar(),
-			center_widget = CenterBar(),
-			end_widget = RightBar(),
+			LeftBar(),
+			CenterBar(),
+			RightBar(),
 		}),
 	})
 end
